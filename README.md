@@ -19,48 +19,48 @@ Người chơi dự đoán giá sản phẩm và tính điểm dựa trên độ
 - 5 vòng chơi
 - Tính điểm tự động
 - Thông báo người chiến thắng
-  +----------------+
-|    Product     |
-+----------------+
-| Name           |
-| Price          |
-+----------------+
+ ## Class Diagram
 
-+----------------+
-|    Player      |
-+----------------+
-| Name           |
-| Score          |
-+----------------+
+```mermaid
+classDiagram
 
-+----------------------+
-|  ProductService      |
-+----------------------+
-| GetProducts()        |
-+----------------------+
+class Product {
+  +string Name
+  +int Price
+}
 
-+----------------------+
-|  ScoreService        |
-+----------------------+
-| AddScore()           |
-| ResetScore()         |
-+----------------------+
+class Player {
+  +string Name
+  +int Score
+  +AddScore()
+}
 
-+----------------------+
-|  GameService         |
-+----------------------+
-| StartGame()          |
-| CheckAnswer()        |
-+----------------------+
+class ProductService {
+  +GetProducts()
+}
 
-+----------------------+
-|    ConsoleUI         |
-+----------------------+
-| ShowMenu()           |
-| GetInput()           |
-| ShowResult()         |
-+----------------------+
+class ScoreService {
+  +AddScore()
+  +ResetScore()
+}
 
+class GameService {
+  +StartGame()
+  +CheckAnswer()
+}
+
+class ConsoleUI {
+  +ShowMenu()
+  +GetInput()
+  +ShowResult()
+}
+
+GameService --> ProductService
+GameService --> ScoreService
+GameService --> Player
+ProductService --> Product
+ConsoleUI --> GameService
+```
 ## Phân công công việc
 
 Trần Gia Bảo:
