@@ -19,14 +19,16 @@ Người chơi dự đoán giá sản phẩm và tính điểm dựa trên độ
 - 5 vòng chơi
 - Tính điểm tự động
 - Thông báo người chiến thắng
- ## Class Diagram
+ ## 🎮 Game Price Guessing - Class Diagram (10 Classes)
 
 ```mermaid
 classDiagram
 
+%% ================= MODEL =================
 class Product {
   +string Name
   +int Price
+  +string Category
 }
 
 class Player {
@@ -35,31 +37,71 @@ class Player {
   +AddScore()
 }
 
+class GameSession {
+  +Player player
+  +List~Product~ products
+  +int CurrentRound
+  +int TotalRound
+}
+
+%% ================= SERVICE =================
 class ProductService {
   +GetProducts()
+  +GetProductByRound()
 }
 
 class ScoreService {
-  +AddScore()
-  +ResetScore()
+  +AddScore(Player)
+  +ResetScore(Player)
+  +CalculateFinalScore()
 }
 
-class GameService {
+class ValidationService {
+  +IsValidNumber(string)
+  +IsValidPrice(int)
+}
+
+%% ================= CONTROLLER =================
+class GameController {
   +StartGame()
-  +CheckAnswer()
+  +ProcessRound()
+  +EndGame()
 }
 
+class RoundManager {
+  +NextRound()
+  +IsGameOver()
+}
+
+%% ================= UI =================
 class ConsoleUI {
   +ShowMenu()
+  +ShowProduct()
   +GetInput()
   +ShowResult()
 }
 
-GameService --> ProductService
-GameService --> ScoreService
-GameService --> Player
+class MessageHelper {
+  +ShowTitle()
+  +ShowCorrect()
+  +ShowWrong()
+}
+
+%% ================= RELATIONSHIPS =================
+
+GameController --> GameSession
+GameController --> ProductService
+GameController --> ScoreService
+GameController --> ValidationService
+GameController --> RoundManager
+GameController --> ConsoleUI
+
 ProductService --> Product
-ConsoleUI --> GameService
+GameSession --> Player
+GameSession --> Product
+
+ConsoleUI --> MessageHelper
+RoundManager --> GameSession
 ```
 ## Phân công công việc
 
